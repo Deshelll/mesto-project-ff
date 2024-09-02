@@ -12,7 +12,7 @@ function createCard (cardTitle, cardLink, deleteCallback) {
 
     cardElement.querySelector('.card__title').textContent = cardTitle;
     cardElement.querySelector('.card__image').src = cardLink;
-    cardElement.querySelector('.card__image').alt = cardTitle;
+    cardElement.querySelector('.card__image').alt = 'На изображении: ' + cardTitle;
 
     cardDeleteButton.addEventListener('click', deleteCallback);
 
