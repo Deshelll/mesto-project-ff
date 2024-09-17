@@ -14,9 +14,9 @@ const popupAdd = document.querySelector('.popup_type_new-card');
 const profileContainer = document.querySelector('.profile__info');
 const titleProfile = profileContainer.querySelector('.profile__title');
 const descriptionProfile = profileContainer.querySelector('.profile__description');
-const form = document.forms['edit-profile'];
-const titleInput = form.elements.name;
-const descriptionInput = form.elements.description;
+const editProfileForm = document.forms['edit-profile'];
+const titleInput = editProfileForm.elements.name;
+const descriptionInput = editProfileForm.elements.description;
 const addCardForm = document.forms['new-place'];
 const nameInput = addCardForm.elements['place-name'];
 const urlInput = addCardForm.elements.link;
@@ -27,7 +27,12 @@ const imageCaptionPopup = imageTypePopup.querySelector('.popup__caption');
 
 //Вывести карточки на страницу
 initialCards.forEach( element => {
-    const card = createCard (element.name, element.link, deleteCard, likeCard, viewImage);
+    const card = createCard ({
+        title: element.name,
+        url: element.link,
+        onDelete: deleteCard,
+        onLike: likeCard,
+        onView: viewImage});
     cardContainer.append(card);
 });
 
@@ -54,26 +59,31 @@ closePopupOverlay(popupAdd);
 buttonClosePopup.forEach((button) => {
     button.addEventListener('click', () => {
         const openedPopup = button.closest('.popup_is-opened');
+
         closePopup(openedPopup);
     });
 });
 
 //Функция для отправки изменений в профиль
-function handleFormSumbit (evt) {
+function handleEditProfileFormSumbit (evt) {
     titleProfile.textContent = titleInput.value;
     descriptionProfile.textContent = descriptionInput.value;
 
     evt.preventDefault();
     
-    const openedPopup = evt.target.closest('.popup_is-opened');
-    closePopup(openedPopup);
+    closePopup(popupEdit);
 }
 //Отправка изменений в профиль
-form.addEventListener('submit', handleFormSumbit);
+editProfileForm.addEventListener('submit', handleEditProfileFormSumbit);
 
 //Создание новой карточки
 addCardForm.addEventListener('submit', function (evt) {
-    const card = createCard(nameInput.value, urlInput.value, deleteCard, likeCard, viewImage);
+    const card = createCard({
+        title: nameInput.value,
+        url: urlInput.value,
+        onDelete: deleteCard,
+        onLike: likeCard,
+        onView: viewImage});
 
     evt.preventDefault();
 
