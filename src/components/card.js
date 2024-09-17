@@ -1,7 +1,7 @@
 //Функция создания карточки
 function createCard (
-        cardTitle,
-        cardLink, {
+        card, 
+    {
         onDelete: deleteCallback,
         onLike: likeCardCallback,
         onView: viewImage
@@ -12,14 +12,14 @@ function createCard (
     const buttonLikeCard = cardElement.querySelector('.card__like-button');
     const cardImage = cardElement.querySelector('.card__image');
 
-    cardElement.querySelector('.card__title').textContent = cardTitle;
-    cardImage.src = cardLink;
-    cardImage.alt = 'На изображении: ' + cardTitle;
+    cardElement.querySelector('.card__title').textContent = card.name;
+    cardImage.src = card.link;
+    cardImage.alt = 'На изображении: ' + card.name;
 
     cardDeleteButton.addEventListener('click', deleteCallback);
     buttonLikeCard.addEventListener('click', likeCardCallback);
     cardElement.querySelector('.card__image').addEventListener('click', () => {
-        viewImage(cardLink, cardTitle);
+        viewImage(card.link, card.name);
     });
 
     return cardElement;

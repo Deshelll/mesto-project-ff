@@ -28,8 +28,7 @@ const imageCaptionPopup = imageTypePopup.querySelector('.popup__caption');
 //Вывести карточки на страницу
 initialCards.forEach( element => {
     const card = createCard (
-        element.name, 
-        element.link, {
+        element, {
         onDelete: deleteCard, 
         onLike: likeCard, 
         onView: viewImage});
