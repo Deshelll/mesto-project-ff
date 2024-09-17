@@ -1,7 +1,7 @@
 //Функция создания карточки
-function createCard ({
-        title: cardTitle,
-        url: cardLink,
+function createCard (
+        cardTitle,
+        cardLink, {
         onDelete: deleteCallback,
         onLike: likeCardCallback,
         onView: viewImage

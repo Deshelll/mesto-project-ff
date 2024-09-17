@@ -27,11 +27,11 @@ const imageCaptionPopup = imageTypePopup.querySelector('.popup__caption');
 
 //Вывести карточки на страницу
 initialCards.forEach( element => {
-    const card = createCard ({
-        title: element.name,
-        url: element.link,
-        onDelete: deleteCard,
-        onLike: likeCard,
+    const card = createCard (
+        element.name, 
+        element.link, {
+        onDelete: deleteCard, 
+        onLike: likeCard, 
         onView: viewImage});
     cardContainer.append(card);
 });
@@ -90,8 +90,7 @@ addCardForm.addEventListener('submit', function (evt) {
     cardContainer.prepend(card);
     addCardForm.reset();
 
-    const openedPopup = evt.target.closest('.popup_is-opened');
-    closePopup(openedPopup);
+    closePopup(popupAdd);
 });
 
 //Функция просмотра изображения
