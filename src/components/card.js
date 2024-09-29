@@ -31,13 +31,18 @@ function createCard (
 
     cardDeleteButton.addEventListener('click', deleteCallback);
     
-    buttonLikeCard.addEventListener('click', function (evt) {
-        likeCard(evt.target, cardElement);
+    buttonLikeCard.addEventListener('click', function () {
+        likeCardCallback(buttonLikeCard, likeCountNode, cardElement.id, isLiked);
     });
 
     cardElement.querySelector('.card__image').addEventListener('click', () => {
         viewImage(card.link, card.name);
     });
+
+    const isLiked = card.likes.some((like) => like._id === userId);;
+    if (isLiked) {
+        buttonLikeCard.classList.add('card__like-button_is-active');
+    }
 
     return cardElement;
 }
@@ -46,24 +51,13 @@ function createCard (
 function deleteCard (event) {
     const card = event.target.closest('.card');
     removeCard(card.id)
-        .then(card.remove())
+        .then(() => card.remove())
         .catch((err) => console.log(err));
 
 }
 
-//Поставить лайк карточке
-/*function likeCard (evt) {
-    if (evt.target.classList.contains('card__like-button')) {
-        evt.target.classList.toggle('card__like-button_is-active');
-    }
-}*/
-
 // Функция для обработки лайков карточки
-function likeCard(likeButton, cardElement) {
-    const isLiked = likeButton.classList.contains('card__like-button_is-active');
-    const cardId = cardElement.id;
-    const likeCountNode = cardElement.querySelector('.like-count');
-
+function likeCard(likeButton, likeCountNode, cardId, isLiked) {
     if (!isLiked) {
         addLikeCard(cardId, false)
             .then((response) => {

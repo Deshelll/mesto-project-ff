@@ -1,13 +1,6 @@
-//Валидация форм
-const enableValidationSettings = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible'
-  };
+import { enableValidationSettings } from '../scripts/index.js';
 
+//Валидация форм
 const showInputError = (formElement, inputElement, errorMessage, enableValidationSettings) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
@@ -18,6 +11,8 @@ const showInputError = (formElement, inputElement, errorMessage, enableValidatio
 
 const hideInputError = (formElement, inputElement, enableValidationSettings) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+
+    inputElement.setCustomValidity("");
 
     inputElement.classList.remove(enableValidationSettings.inputErrorClass);
     errorElement.classList.remove(enableValidationSettings.errorClass);
@@ -84,16 +79,20 @@ function toggleButtonState (inputList, buttonElement, enableValidationSettings) 
     }
 }
 
-function clearValidation (formElement, enableValidationSettings) {
+function clearValidation (formElement, enableValidationSettings, resetInput = true) {
     const inputList = Array.from(formElement.querySelectorAll(enableValidationSettings.inputSelector));
     const buttonElement = formElement.querySelector(enableValidationSettings.submitButtonSelector);
 
-    inputList.forEach((inputElement, enableValidationSettings) => {
+    inputList.forEach((inputElement) => {
         hideInputError(formElement, inputElement, enableValidationSettings);
-        inputElement.textContent = "";
+
+        if (resetInput) {
+            inputElement.value = "";
+        }
     });
 
     disabledButton(buttonElement, enableValidationSettings);
 }
 
-export {enableValidationSettings, enableValidation, clearValidation};
+
+export { enableValidation, clearValidation, toggleButtonState};
