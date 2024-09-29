@@ -1,0 +1,25 @@
+.popup__button_disabled {
+    background: none;
+    border: 1px solid #000000;
+    opacity: 10%;
+    color: #000000;
+}
+
+input.form__input_type_error {
+    border-bottom: 1px solid #FF0000;
+}
+
+.popup__error_visible {
+    color: #FF0000;
+    font-size: 12px;
+}
+
+.like-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card__delete-hidden {
+    display: none;
+}
