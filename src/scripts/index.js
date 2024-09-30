@@ -1,7 +1,7 @@
 import '../pages/index.css';
-import { openPopup, closePopup, closePopupOverlay, setListernerPopup, fillInputsPopup } from '../components/modal.js';
+import { openPopup, closePopup, closePopupOverlay } from '../components/modal.js';
 import { createCard, deleteCard, likeCard } from '../components/card.js';
-import { enableValidation, clearValidation} from '../components/validation.js';
+import { enableValidation, clearValidation, toggleButtonState} from '../components/validation.js';
 import { getUser, getCards, patchProfile, postCard, patchImageProfile } from '../components/api.js';
 
 //Темплейт карточки
@@ -73,9 +73,6 @@ buttonClosePopupList.forEach((button) => {
 
 //Функция для отправки изменений в профиль
 function handleEditProfileFormSumbit (evt) {
-    titleProfile.textContent = titleInput.value;
-    descriptionProfile.textContent = descriptionInput.value;
-
     evt.preventDefault();
     
     loading(evt.submitter, 'Сохранение...');
@@ -165,6 +162,30 @@ function handleEditAvatar() {
     }
 
     avatarFormElement.addEventListener("submit", handleFormSubmitAvatar);
+}
+
+function setListernerPopup (button, popup, callback) {
+    button.addEventListener('click', () => {
+        openPopup(popup);
+
+        clearValidation(popup, enableValidationSettings);
+
+        if (callback) {
+            callback();
+
+            const formElement = popup.querySelector(enableValidationSettings.formSelector);
+            const inputList = Array.from(formElement.querySelectorAll(enableValidationSettings.inputSelector));
+            const buttonElement = formElement.querySelector(enableValidationSettings.submitButtonSelector);
+
+            toggleButtonState(inputList, buttonElement, enableValidationSettings);
+        }
+    });
+}
+
+
+function fillInputsPopup () {
+    titleInput.value = titleProfile.textContent;
+    descriptionInput.value = descriptionProfile.textContent;
 }
 
 handleEditAvatar();

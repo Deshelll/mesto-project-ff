@@ -1,13 +1,3 @@
-import { clearValidation, toggleButtonState } from '../components/validation.js';
-import { enableValidationSettings } from '../scripts/index.js';
-
-const editProfileForm = document.forms['edit-profile'];
-const titleInput = editProfileForm.elements.name;
-const descriptionInput = editProfileForm.elements.description;
-const profileContainer = document.querySelector('.profile__info');
-const titleProfile = profileContainer.querySelector('.profile__title');
-const descriptionProfile = profileContainer.querySelector('.profile__description');
-
 function openPopup (openedPopup) {
     openedPopup.classList.add('popup_is-opened');
     document.addEventListener('keydown', keyHandler);
@@ -41,28 +31,4 @@ function keyHandler (evt) {
     }
 }
 
-
-function setListernerPopup (button, popup, callback) {
-    button.addEventListener('click', () => {
-        openPopup(popup);
-
-        clearValidation(popup, enableValidationSettings);
-
-        if (callback) {
-            callback();
-
-            const formElement = popup.querySelector(enableValidationSettings.formSelector);
-            const inputList = Array.from(formElement.querySelectorAll(enableValidationSettings.inputSelector));
-            const buttonElement = formElement.querySelector(enableValidationSettings.submitButtonSelector);
-
-            toggleButtonState(inputList, buttonElement, enableValidationSettings);
-        }
-    });
-}
-
-function fillInputsPopup () {
-    titleInput.value = titleProfile.textContent;
-    descriptionInput.value = descriptionProfile.textContent;
-}
-
-export { openPopup, closePopup, keyHandler, closePopupOverlay, setListernerPopup, fillInputsPopup };
+export { openPopup, closePopup, keyHandler, closePopupOverlay };
